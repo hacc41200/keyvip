@@ -33,14 +33,11 @@ body {
   justify-content: center;
   padding: 24px 16px;
 }
-/* BG subtle */
 body::before {
   content: '';
   position: fixed; inset: 0; pointer-events: none;
   background: radial-gradient(ellipse 60% 35% at 50% 0%, rgba(249,115,22,.08) 0%, transparent 60%);
 }
-
-/* PARTICLES */
 #pts { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
 .pt {
   position: absolute; border-radius: 50%; opacity: 0;
@@ -52,14 +49,11 @@ body::before {
   92%  { opacity: .4; }
   100% { transform: translateY(-40px); opacity: 0; }
 }
-
 .page {
   position: relative; z-index: 1;
   width: 100%; max-width: 460px;
   display: flex; flex-direction: column; gap: 20px;
 }
-
-/* HEADER */
 .header { text-align: center; }
 .chip {
   display: inline-flex; align-items: center; gap: 6px;
@@ -73,28 +67,19 @@ body::before {
 .chip-dot {
   width: 6px; height: 6px; border-radius: 50%;
   background: var(--orange);
-  animation: pulse-dot 2s ease-in-out infinite;
+  animation: pdot 2s ease-in-out infinite;
 }
-@keyframes pulse-dot {
-  0%,100% { opacity:.4; transform: scale(1); }
-  50%      { opacity:1; transform: scale(1.4); }
-}
+@keyframes pdot { 0%,100%{opacity:.4;transform:scale(1)}50%{opacity:1;transform:scale(1.4)} }
 .title {
-  font-size: 32px; font-weight: 700; line-height: 1.15;
-  color: var(--text); letter-spacing: -0.5px;
-  margin-bottom: 6px;
+  font-size: 30px; font-weight: 700; line-height: 1.2;
+  color: var(--text); letter-spacing: -.5px; margin-bottom: 6px;
 }
 .title span { color: var(--orange); }
-.subtitle {
-  font-size: 13px; color: var(--text3); letter-spacing: 1px;
-}
-
-/* CARD */
+.subtitle { font-size: 12px; color: var(--text3); letter-spacing: 1px; }
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 24px;
+  border-radius: 16px; padding: 24px;
   position: relative; overflow: hidden;
 }
 .card::before {
@@ -103,18 +88,15 @@ body::before {
   background: linear-gradient(90deg, transparent, var(--orange), transparent);
   opacity: .4;
 }
-
-/* STATUS BAR */
 .status {
   display: none; align-items: center; gap: 10px;
-  border-radius: 10px; padding: 11px 14px;
-  margin-bottom: 16px;
+  border-radius: 10px; padding: 11px 14px; margin-bottom: 16px;
   font-size: 13px; font-weight: 500;
 }
 .status.show { display: flex; }
 .status.loading { background: rgba(249,115,22,.08); border: 1px solid rgba(249,115,22,.2); color: var(--orange); }
-.status.success { background: rgba(34,197,94,.07); border: 1px solid rgba(34,197,94,.2); color: var(--green); }
-.status.error   { background: rgba(239,68,68,.07); border: 1px solid rgba(239,68,68,.2); color: var(--red); }
+.status.success { background: rgba(34,197,94,.07);  border: 1px solid rgba(34,197,94,.2);  color: var(--green); }
+.status.error   { background: rgba(239,68,68,.07);  border: 1px solid rgba(239,68,68,.2);  color: var(--red); }
 .status.info    { background: rgba(245,158,11,.07); border: 1px solid rgba(245,158,11,.2); color: var(--gold); }
 .spinner {
   width: 14px; height: 14px; flex-shrink: 0;
@@ -122,8 +104,6 @@ body::before {
   border-radius: 50%; animation: spin .7s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
-
-/* TIMER */
 .timer-bar {
   display: none; align-items: center; justify-content: space-between;
   background: var(--surface2); border: 1px solid var(--border2);
@@ -137,8 +117,6 @@ body::before {
 }
 .timer-val.expired { color: var(--red); animation: blink 1s step-end infinite; }
 @keyframes blink { 50% { opacity: .3; } }
-
-/* KEY BOX */
 .key-box { display: none; flex-direction: column; gap: 8px; margin-bottom: 16px; }
 .key-box.show { display: flex; }
 .key-label { font-size: 11px; color: var(--text3); letter-spacing: 1px; text-transform: uppercase; }
@@ -155,26 +133,21 @@ body::before {
 }
 .copy-btn {
   background: rgba(34,197,94,.1); border: 1px solid rgba(34,197,94,.25);
-  border-radius: 7px; padding: 8px 12px;
+  border-radius: 7px; padding: 8px 14px;
   color: var(--green); font-size: 12px; font-weight: 600;
   cursor: pointer; transition: all .2s; white-space: nowrap;
   font-family: 'Inter', sans-serif;
 }
 .copy-btn:hover { background: rgba(34,197,94,.18); }
 .copy-btn.copied { background: rgba(34,197,94,.25); }
-
-/* INFO BOX */
 .info-box {
   display: flex; align-items: flex-start; gap: 12px;
   background: var(--surface2); border: 1px solid var(--border2);
-  border-radius: 10px; padding: 14px;
-  margin-bottom: 16px;
+  border-radius: 10px; padding: 14px; margin-bottom: 16px;
 }
 .info-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
 .info-text { font-size: 13.5px; line-height: 1.65; color: var(--text2); }
 .info-text strong { color: var(--text); }
-
-/* STEPS */
 .steps { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
 .step {
   display: flex; align-items: center; gap: 12px;
@@ -191,21 +164,20 @@ body::before {
 .step-text { font-size: 13px; color: var(--text2); line-height: 1.4; }
 .step-text strong { color: var(--text); }
 
-/* MAIN BUTTON */
+/* NÚT LẤY KEY — là thẻ <a> để Link4M full-script wrap tự động */
 .btn-main {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
   width: 100%; padding: 15px;
   background: var(--orange); border: none; border-radius: 11px;
-  color: #fff; font-size: 14px; font-weight: 700;
+  color: #fff !important; font-size: 14px; font-weight: 700;
   letter-spacing: .5px; cursor: pointer;
-  transition: all .2s;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: all .2s; text-decoration: none !important;
   font-family: 'Inter', sans-serif;
 }
-.btn-main:hover:not(:disabled) { background: var(--orange2); transform: translateY(-1px); }
+.btn-main:hover { background: var(--orange2); transform: translateY(-1px); }
 .btn-main:active { transform: scale(.99); }
-.btn-main:disabled { opacity: .45; cursor: not-allowed; transform: none !important; }
+.btn-main.disabled { opacity: .45; pointer-events: none; }
 
-/* RESET BUTTON */
 .btn-reset {
   width: 100%; padding: 11px;
   background: transparent; border: 1px solid var(--border2);
@@ -216,14 +188,9 @@ body::before {
   font-family: 'Inter', sans-serif;
 }
 .btn-reset:hover { color: var(--text2); border-color: var(--border); }
-
-/* DIVIDER */
-.divider { height: 1px; background: var(--border); margin: 4px 0; }
-
-/* BADGES */
+.divider { height: 1px; background: var(--border); margin: 20px 0 16px; }
 .badges {
   display: flex; flex-wrap: wrap; gap: 6px; justify-content: center;
-  padding-top: 4px;
 }
 .badge {
   display: flex; align-items: center; gap: 5px;
@@ -231,36 +198,30 @@ body::before {
   border-radius: 20px; padding: 4px 10px;
   font-size: 11px; color: var(--text3); letter-spacing: .5px;
 }
-.badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--text3); }
-.badge-dot.green { background: var(--green); }
-.badge-dot.orange { background: var(--orange); }
-
-/* OVERLAY */
+.bdot { width: 5px; height: 5px; border-radius: 50%; background: var(--text3); }
+.bdot.g { background: var(--green); }
+.bdot.o { background: var(--orange); }
 .overlay {
   display: none; position: fixed; inset: 0; z-index: 100;
-  background: rgba(10,10,15,.9);
+  background: rgba(10,10,15,.92);
   flex-direction: column; align-items: center; justify-content: center; gap: 16px;
   backdrop-filter: blur(6px);
 }
 .overlay.show { display: flex; }
-.overlay-spin {
+.ov-spin {
   width: 44px; height: 44px;
   border: 3px solid rgba(249,115,22,.15); border-top-color: var(--orange);
   border-radius: 50%; animation: spin .8s linear infinite;
 }
-.overlay-title { font-size: 15px; font-weight: 600; color: var(--text); }
-.overlay-sub { font-size: 12px; color: var(--text3); }
-
-/* FOOTER */
+.ov-title { font-size: 15px; font-weight: 600; color: var(--text); }
+.ov-sub   { font-size: 12px; color: var(--text3); }
 .footer {
   text-align: center; font-size: 11px;
   color: var(--text3); letter-spacing: .5px;
-  margin-top: 4px;
 }
-
 @media (max-width: 480px) {
-  .title { font-size: 26px; }
-  .card { padding: 18px; }
+  .title { font-size: 24px; }
+  .card  { padding: 18px; }
 }
 </style>
 </head>
@@ -268,32 +229,28 @@ body::before {
 <div id="pts"></div>
 
 <div class="overlay" id="overlay">
-  <div class="overlay-spin"></div>
-  <div class="overlay-title">Đang xác minh</div>
-  <div class="overlay-sub">Vui lòng đợi trong giây lát...</div>
+  <div class="ov-spin"></div>
+  <div class="ov-title">Đang xác minh</div>
+  <div class="ov-sub">Vui lòng đợi trong giây lát...</div>
 </div>
 
 <div class="page">
 
-  <!-- HEADER -->
   <div class="header">
     <div class="chip"><div class="chip-dot"></div>Free Fire · Key System</div>
     <div class="title">Key Access <span>System</span></div>
-    <div class="subtitle">Secure · Anti-Bypass · Valid 24h</div>
+    <div class="subtitle">SECURE · ANTI-BYPASS · VALID 24H</div>
   </div>
 
-  <!-- CARD -->
   <div class="card">
 
     <div class="status" id="status"></div>
 
-    <!-- Timer -->
     <div class="timer-bar" id="timerBar">
       <div class="timer-label">⏱ Hết hạn trong</div>
       <div class="timer-val" id="timerVal">24:00:00</div>
     </div>
 
-    <!-- Key box -->
     <div class="key-box" id="keyBox">
       <div class="key-label">🔑 Key hợp lệ · Device Locked</div>
       <div class="key-inner">
@@ -302,7 +259,6 @@ body::before {
       </div>
     </div>
 
-    <!-- Get panel -->
     <div id="getPanel">
       <div class="info-box">
         <div class="info-icon">🎮</div>
@@ -315,11 +271,11 @@ body::before {
       <div class="steps">
         <div class="step">
           <div class="step-num">1</div>
-          <div class="step-text">Nhấn nút → <strong>chuyển trang xác minh</strong></div>
+          <div class="step-text">Nhấn nút → <strong>chuyển trang xác minh Link4M</strong></div>
         </div>
         <div class="step">
           <div class="step-num">2</div>
-          <div class="step-text">Hoàn thành quảng cáo ngắn trên Link4M</div>
+          <div class="step-text">Hoàn thành quảng cáo ngắn — khoảng 10 giây</div>
         </div>
         <div class="step">
           <div class="step-num">3</div>
@@ -327,46 +283,64 @@ body::before {
         </div>
       </div>
 
-      <button class="btn-main" id="btnGet" onclick="startFlow()">
+      <!--
+        Đây là thẻ <a> trỏ về chính trang này.
+        Link4M full-script sẽ tự động bắt link này,
+        wrap qua quảng cáo, rồi redirect về href sau khi xem xong.
+        data-lm-skip="false" đảm bảo không bỏ qua.
+      -->
+      <a id="btnGet"
+         class="btn-main"
+         href="https://lch04122009-rgb.github.io/keyvip/"
+         data-lm-skip="false"
+         onclick="onClickGetKey(event)">
         ⚡ Lấy Key Free Fire Miễn Phí
-      </button>
+      </a>
     </div>
 
     <button class="btn-reset" id="btnReset" onclick="resetFlow()">
       🔄 Lấy key mới
     </button>
 
-    <div class="divider" style="margin-top:20px"></div>
-
+    <div class="divider"></div>
     <div class="badges">
-      <div class="badge"><div class="badge-dot green"></div>Anti-Bypass</div>
-      <div class="badge"><div class="badge-dot orange"></div>Device Lock</div>
-      <div class="badge"><div class="badge-dot"></div>One-Time Token</div>
-      <div class="badge"><div class="badge-dot green"></div>24H Auto-Delete</div>
+      <div class="badge"><div class="bdot g"></div>Anti-Bypass</div>
+      <div class="badge"><div class="bdot o"></div>Device Lock</div>
+      <div class="badge"><div class="bdot"></div>One-Time Token</div>
+      <div class="badge"><div class="bdot g"></div>24H Auto-Delete</div>
     </div>
 
   </div>
 
-  <div class="footer">Free Fire Key System v5.0 · Powered by Link4M</div>
+  <div class="footer">Free Fire Key System v5.1 · Powered by Link4M</div>
 </div>
 
-<script>
-/* ════ CONFIG ════ */
-const CFG = {
-  // Short link CỐ ĐỊNH bạn tạo sẵn trên Link4M dashboard
-  // Trỏ về: https://lch04122009-rgb.github.io/keyvip/
-  // SAU KHI CÓ SHORT LINK, điền vào đây:
-  SHORT_LINK: 'https://link4m.net/keyvip',   // <-- ĐỔI THÀNH SHORT LINK CỦA BẠN
+<!-- ══════════════════════════════════════════════════
+  Link4M Full Script
+  Tự động bắt tất cả <a href> trên trang và wrap qua quảng cáo.
+  Sau khi user xem quảng cáo xong, Link4M redirect về href gốc.
+  link4m_exclude_domains: loại trừ chính domain này để tránh loop vô tận.
+══════════════════════════════════════════════════ -->
+<script type="text/javascript">
+  var link4m_url            = 'https://link4m.co/';
+  var link4m_api_token      = '687f718ea1faab07844af330';
+  var link4m_advert         = 2;
+  var link4m_exclude_domains = ['lch04122009-rgb.github.io'];
+</script>
+<script src="https://link4m.co/js/full-script.js"></script>
 
-  BASE_URL  : 'https://lch04122009-rgb.github.io/keyvip/',
-  SECRET    : 'FF_KEY_2026_SECRET',
-  KEY_LEN   : 18,
-  KEY_CHARS : 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789',
-  EXPIRE_MS : 86_400_000,   // 24h
-  MIN_ELAPSED: 6000,        // 6 giây tối thiểu trên Link4M
+<script>
+/* ═══════════════ CONFIG ═══════════════ */
+const CFG = {
+  BASE_URL   : 'https://lch04122009-rgb.github.io/keyvip/',
+  SECRET     : 'FF_KEY_2026_SECRET',
+  KEY_LEN    : 18,
+  KEY_CHARS  : 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789',
+  EXPIRE_MS  : 86_400_000,   // 24h
+  MIN_ELAPSED: 6_000,        // 6 giây tối thiểu
 };
 
-/* ════ DEVICE ID ════ */
+/* ═══ DEVICE ID ═══ */
 function getDeviceID() {
   const raw = [
     navigator.userAgent, navigator.language, navigator.platform,
@@ -383,7 +357,7 @@ function getDeviceID() {
   return h.toString(16).toUpperCase().padStart(8, '0');
 }
 
-/* ════ KEY GEN ════ */
+/* ═══ KEY GEN ═══ */
 async function genKey(deviceID) {
   const today = new Date().toISOString().slice(0, 10);
   const seed  = CFG.SECRET + '|' + deviceID + '|' + today;
@@ -394,13 +368,13 @@ async function genKey(deviceID) {
   ).join('');
 }
 
-/* ════ STORAGE ════ */
+/* ═══ STORAGE ═══ */
 const LS = {
-  get : k     => { try { return localStorage.getItem(k) } catch { return null } },
-  set : (k,v) => { try { localStorage.setItem(k, v) } catch {} },
-  del : k     => { try { localStorage.removeItem(k) } catch {} },
-  getJ: k     => { try { return JSON.parse(localStorage.getItem(k)) } catch { return null } },
-  setJ: (k,v) => { try { localStorage.setItem(k, JSON.stringify(v)) } catch {} },
+  get : k     => { try { return localStorage.getItem(k)            } catch { return null } },
+  set : (k,v) => { try { localStorage.setItem(k, v)                } catch {} },
+  del : k     => { try { localStorage.removeItem(k)                } catch {} },
+  getJ: k     => { try { return JSON.parse(localStorage.getItem(k))} catch { return null } },
+  setJ: (k,v) => { try { localStorage.setItem(k, JSON.stringify(v))} catch {} },
 };
 
 function saveKey(key) {
@@ -413,58 +387,36 @@ function loadValidKey() {
   return d;
 }
 
-/* ════ TOKEN ════ */
-function newToken() {
-  return Array.from(crypto.getRandomValues(new Uint8Array(20)))
-    .map(b => b.toString(16).padStart(2,'0')).join('');
-}
-
-/* ════ STATUS UI ════ */
+/* ═══ STATUS UI ═══ */
 function setStatus(type, msg) {
-  const el = document.getElementById('status');
+  const el   = document.getElementById('status');
   const icon = { loading:'', success:'✅', error:'❌', info:'ℹ️' }[type] || '';
   el.className = 'status show ' + type;
   el.innerHTML = type === 'loading'
     ? `<div class="spinner"></div><span>${msg}</span>`
     : `<span>${icon} ${msg}</span>`;
 }
-function clearStatus() {
-  document.getElementById('status').className = 'status';
-}
+function clearStatus() { document.getElementById('status').className = 'status'; }
 
-/* ════ FLOW ════
-   Không gọi API → không bị CORS.
-
-   SHORT LINK là link cố định tạo 1 lần trên Link4M dashboard.
-   Link4M trỏ về BASE_URL (không có ?v=).
-
-   Token được lưu vào localStorage TRƯỚC khi redirect.
-   Khi trang load lại (sau quảng cáo), đọc token từ localStorage,
-   không cần ?v= trên URL.
-
-   Anti-bypass: kiểm tra thời gian elapsed + token có tồn tại không.
-════ */
-
-async function startFlow() {
+/* ═══ CLICK NÚT LẤY KEY ═══ */
+function onClickGetKey(e) {
+  // Không preventDefault — để Link4M full-script xử lý bình thường
   const btn = document.getElementById('btnGet');
-  btn.disabled = true;
-  setStatus('loading', 'Đang chuẩn bị phiên xác minh...');
+  if (btn.classList.contains('disabled')) { e.preventDefault(); return; }
 
-  await delay(400);
-
-  const tok = newToken();
+  // Lưu token + timestamp vào localStorage TRƯỚC khi Link4M redirect
+  const tok = Array.from(crypto.getRandomValues(new Uint8Array(20)))
+    .map(b => b.toString(16).padStart(2,'0')).join('');
   LS.set('ff_tok',    tok);
   LS.set('ff_tok_ts', String(Date.now()));
-  LS.del('ff_key'); // Xóa key cũ nếu có
+  LS.del('ff_key');
 
-  setStatus('loading', 'Đang chuyển trang xác minh...');
-  await delay(500);
-
-  // Redirect sang short link cố định của Link4M
-  window.location.href = CFG.SHORT_LINK;
+  btn.classList.add('disabled');
+  btn.textContent = '⏳ Đang chuyển trang...';
+  // Link4M full-script sẽ intercept và redirect qua quảng cáo
 }
 
-/* ════ XỬ LÝ KHI QUAY VỀ ════ */
+/* ═══ XỬ LÝ KHI QUAY VỀ SAU QUẢNG CÁO ═══ */
 async function handleReturn() {
   document.getElementById('overlay').classList.add('show');
   await delay(800);
@@ -473,47 +425,52 @@ async function handleReturn() {
   const tokTs   = parseInt(LS.get('ff_tok_ts') || '0', 10);
   const elapsed = Date.now() - tokTs;
 
-  // Xóa ngay (one-time)
+  // Xóa ngay (one-time use)
   LS.del('ff_tok');
   LS.del('ff_tok_ts');
 
-  // Kiểm tra có token không
+  // Kiểm tra token tồn tại
   if (!tok) {
     document.getElementById('overlay').classList.remove('show');
     setStatus('error', 'Không tìm thấy phiên xác minh. Vui lòng thử lại.');
-    document.getElementById('btnGet').disabled = false;
+    resetBtn();
     return;
   }
 
-  // Kiểm tra thời gian (chống bypass bằng cách mở thẳng BASE_URL)
+  // Chống bypass: phải mất ít nhất MIN_ELAPSED ms
   if (elapsed < CFG.MIN_ELAPSED) {
     document.getElementById('overlay').classList.remove('show');
-    setStatus('error', 'Vui lòng hoàn thành quảng cáo trước khi quay lại.');
-    document.getElementById('btnGet').disabled = false;
+    setStatus('error', 'Vui lòng hoàn thành quảng cáo đầy đủ trước khi quay lại.');
+    resetBtn();
     return;
   }
 
-  // ✅ Hợp lệ → tạo key
-  const deviceID = getDeviceID();
-  const key      = await genKey(deviceID);
+  // ✅ Hợp lệ — cấp key
+  const key = await genKey(getDeviceID());
   saveKey(key);
 
   document.getElementById('overlay').classList.remove('show');
   showKeyUI(key, LS.getJ('ff_key').exp);
 }
 
-/* ════ HIỆN KEY UI ════ */
+function resetBtn() {
+  const btn = document.getElementById('btnGet');
+  btn.classList.remove('disabled');
+  btn.innerHTML = '⚡ Lấy Key Free Fire Miễn Phí';
+}
+
+/* ═══ HIỆN KEY ═══ */
 function showKeyUI(key, exp) {
-  document.getElementById('getPanel').style.display  = 'none';
-  document.getElementById('keyText').textContent     = key;
+  document.getElementById('getPanel').style.display = 'none';
+  document.getElementById('keyText').textContent    = key;
   document.getElementById('keyBox').classList.add('show');
   document.getElementById('timerBar').classList.add('show');
-  document.getElementById('btnReset').style.display  = 'flex';
+  document.getElementById('btnReset').style.display = 'flex';
   clearStatus();
   startTimer(exp);
 }
 
-/* ════ TIMER ════ */
+/* ═══ TIMER ═══ */
 let timerInt = null;
 function startTimer(exp) {
   clearInterval(timerInt);
@@ -522,8 +479,8 @@ function startTimer(exp) {
     const d = Math.max(0, exp - Date.now());
     if (d === 0) {
       LS.del('ff_key');
-      el.className     = 'timer-val expired';
-      el.textContent   = 'Hết hạn';
+      el.className   = 'timer-val expired';
+      el.textContent = 'Hết hạn';
       clearInterval(timerInt);
       setTimeout(resetFlow, 2000);
       return;
@@ -533,12 +490,11 @@ function startTimer(exp) {
     const s = Math.floor((d % 60000)   / 1000);
     el.textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
   }
-  tick();
-  timerInt = setInterval(tick, 1000);
+  tick(); timerInt = setInterval(tick, 1000);
 }
 const pad = n => String(n).padStart(2, '0');
 
-/* ════ COPY ════ */
+/* ═══ COPY ═══ */
 function copyKey() {
   const key = document.getElementById('keyText').textContent;
   if (!key || key === '—') return;
@@ -550,7 +506,7 @@ function copyKey() {
   });
 }
 
-/* ════ RESET ════ */
+/* ═══ RESET ═══ */
 function resetFlow() {
   clearInterval(timerInt);
   LS.del('ff_key'); LS.del('ff_tok'); LS.del('ff_tok_ts');
@@ -559,40 +515,36 @@ function resetFlow() {
   document.getElementById('timerVal').className    = 'timer-val';
   document.getElementById('btnReset').style.display = 'none';
   document.getElementById('getPanel').style.display = 'block';
-  document.getElementById('btnGet').disabled        = false;
   clearStatus();
+  resetBtn();
 }
 
 const delay = ms => new Promise(r => setTimeout(r, ms));
 
-/* ════ INIT ════ */
+/* ═══ INIT ═══ */
 (function init() {
-  // Kiểm tra key cũ còn hạn
+  // 1. Key cũ còn hạn?
   const stored = loadValidKey();
   if (stored && stored.deviceID === getDeviceID()) {
     showKeyUI(stored.key, stored.exp);
     return;
   }
 
-  // Kiểm tra có pending token không
-  // → trang load lại sau khi xem quảng cáo Link4M
+  // 2. Có pending token? (vừa quay về sau quảng cáo)
   const tok   = LS.get('ff_tok');
   const tokTs = parseInt(LS.get('ff_tok_ts') || '0', 10);
   const age   = Date.now() - tokTs;
 
   if (tok && age > 0 && age < 3_600_000) {
-    // Có token hợp lệ (< 1 tiếng) → xử lý return
     handleReturn();
     return;
   }
 
-  // Xóa token cũ nếu quá hạn
-  if (tok) {
-    LS.del('ff_tok'); LS.del('ff_tok_ts');
-  }
+  // 3. Token cũ quá hạn → xóa
+  if (tok) { LS.del('ff_tok'); LS.del('ff_tok_ts'); }
 })();
 
-/* ════ PARTICLES ════ */
+/* ═══ PARTICLES ═══ */
 (function() {
   const c = document.getElementById('pts');
   for (let i = 0; i < 25; i++) {
@@ -610,9 +562,8 @@ const delay = ms => new Promise(r => setTimeout(r, ms));
   }
 })();
 
-/* ════ ANTI-DEVTOOLS ════ */
 document.addEventListener('keydown', e => {
-  if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && 'IJC'.includes(e.key)) || (e.ctrlKey && e.key === 'U'))
+  if (e.key==='F12'||(e.ctrlKey&&e.shiftKey&&'IJC'.includes(e.key))||(e.ctrlKey&&e.key==='U'))
     e.preventDefault();
 });
 document.addEventListener('contextmenu', e => e.preventDefault());
