@@ -288,7 +288,7 @@ body::before{
 <script>
 const CFG = {
   API_TOKEN  : '687f718ea1faab07844af330',
-  BASE_URL   : 'https://lch04122009-rgb.github.io/keyvip/',
+  BASE_URL   : 'https://hacc41200.github.io/keyvip/',
   SECRET     : 'FF_KEY_2026_SECRET',
   KEY_LEN    : 18,
   KEY_CHARS  : 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789',
@@ -307,9 +307,7 @@ function getDeviceID(){
   return h.toString(16).toUpperCase().padStart(8,'0');
 }
 
-/* ═══ KEY GEN — luôn tạo key MỚI mỗi lần gọi ═══
-   Thêm nonce (random) vào seed để mỗi lần generate ra key khác nhau
-   dù cùng device và cùng ngày. */
+/* ═══ KEY GEN — luôn tạo key MỚI mỗi lần gọi ═══ */
 async function genKey(did){
   const nonce=Array.from(crypto.getRandomValues(new Uint8Array(8)))
     .map(b=>b.toString(16).padStart(2,'0')).join('');
@@ -346,24 +344,13 @@ function setStatus(type,msg){
 }
 function clearStatus(){document.getElementById('status').className='status';}
 
-/* ═══ LINK4M API ═══
-   Mỗi lần gọi đều tạo URL destination MỚI bằng cách thêm:
-   - _t=timestamp (milliseconds)
-   - _r=random string
-   → Link4M API sẽ coi là URL khác nhau → trả về short link MỚI.
-   Không bao giờ reuse link cũ. */
+/* ═══ LINK4M API — luôn tạo link MỚI ═══ */
 async function createShortLink(){
-  // Tạo unique nonce cho destination URL
   const nonce=Array.from(crypto.getRandomValues(new Uint8Array(6)))
     .map(b=>b.toString(36)).join('');
   const ts=Date.now();
 
-  // URL destination: BASE_URL + #kapowwss + unique params
-  // Lưu ý: hash fragment (#) không gửi tới server, nhưng ta dùng query params
-  // trước hash để Link4M thấy URL khác nhau.
-  // Format: BASE_URL?_t=xxx&_r=yyy#kapowwss
   const destUrl=`${CFG.BASE_URL}?_t=${ts}&_r=${nonce}#kapowwss`;
-
   const apiUrl=`https://link4m.co/api-shorten/v2?api=${CFG.API_TOKEN}&url=${encodeURIComponent(destUrl)}`;
 
   try{
@@ -376,7 +363,6 @@ async function createShortLink(){
     }
     throw new Error('API trả về lỗi HTTP '+r.status);
   }catch(e){
-    // Fallback qua proxy nếu CORS
     const proxies=[
       `https://corsproxy.io/?url=${encodeURIComponent(apiUrl)}`,
       `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`,
@@ -396,10 +382,7 @@ async function createShortLink(){
   }
 }
 
-/* ══════════════════════════════════════════
-   ║  MAIN PAGE LOGIC                      ║
-   ╚═════════════════════════════════════════ */
-
+/* ═══ MAIN PAGE LOGIC ═══ */
 async function startFlow(){
   const btn=document.getElementById('btnGet');
   btn.disabled=true;
@@ -407,21 +390,16 @@ async function startFlow(){
   setStatus('loading','Đang tạo link xác minh MỚI từ API...');
 
   try{
-    // Xóa sạch trạng thái cũ
     LS.del('ff_key');
     LS.del('ff_tok');
     LS.del('ff_tok_ts');
     LS.del('ff_short');
 
-    // Tạo token mới
     const tok=Array.from(crypto.getRandomValues(new Uint8Array(20)))
       .map(b=>b.toString(16).padStart(2,'0')).join('');
     LS.set('ff_tok',tok);
     LS.set('ff_tok_ts',String(Date.now()));
 
-    // ★★★ GỌI API TẠO LINK MỚI MỖI LẦN ★★★
-    // Hàm createShortLink() luôn thêm timestamp + nonce vào URL
-    // → Link4M trả về short link hoàn toàn mới
     const shortLink=await createShortLink();
     LS.set('ff_short',shortLink);
 
@@ -530,10 +508,7 @@ function resetFlow(){
   clearStatus();
 }
 
-/* ══════════════════════════════════════════════
-   ║  KAPOWWSS PAGE LOGIC (#kapowwss)          ║
-   ╚═════════════════════════════════════════════ */
-
+/* ═══ KAPOWWSS PAGE LOGIC ═══ */
 async function handleKapowwssPage(){
   document.getElementById('mainPage').style.display='none';
   document.getElementById('kapowPage').classList.add('show');
@@ -598,7 +573,6 @@ async function handleKapowwssPage(){
 
   try{
     const did=getDeviceID();
-    // ★★★ genKey() luôn tạo key MỚI nhờ nonce random trong seed ★★★
     const key=await genKey(did);
     saveKey(key);
 
@@ -627,7 +601,6 @@ async function handleKapowwssPage(){
 
 /* ═══ INIT — ROUTER ═══ */
 (function init(){
-  // Kiểm tra hash #kapowwss HOẶC query param _t/_r có hash #kapowwss
   const hash=window.location.hash;
   const isKapowwss = hash === '#kapowwss' || hash.includes('kapowwss');
 
@@ -636,15 +609,12 @@ async function handleKapowwssPage(){
     return;
   }
 
-  // TRANG CHÍNH
   const stored=loadValidKey();
   if(stored && stored.deviceID===getDeviceID()){
     showKeyUI(stored.key,stored.exp);
     return;
   }
 
-  // Xóa sạch trạng thái cũ — không restore link box
-  // Lần bấm "Lấy Key" tiếp theo sẽ gọi API tạo link MỚI
   LS.del('ff_tok');
   LS.del('ff_tok_ts');
   LS.del('ff_short');
