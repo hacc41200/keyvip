@@ -335,7 +335,7 @@ function randBase36(bytes){
     .map(b=>(b%36).toString(36)).join('');
 }
 
-/* ═══ KEY GEN ═══ */
+/* ═══ KEY GEN - TẠO KEY NGẪU NHIÊN 18 KÝ TỰ ═══ */
 async function genKey(did, sessionID){
   let counter = parseInt(LS.get('ff_gen_counter')||'0', 10) + 1;
   LS.set('ff_gen_counter', String(counter));
@@ -372,7 +372,7 @@ const LS={
   setJ:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}},
 };
 
-/* ═══ KEY MANAGEMENT ═══ */
+/* ═══ KEY MANAGEMENT - LƯU VÀO FIREBASE ═══ */
 function saveKey(key, sessionID){
   // 1. Lưu vào localStorage (giữ nguyên cho UI)
   LS.setJ('ff_key',{
@@ -391,7 +391,13 @@ function saveKey(key, sessionID){
       createdAt: Date.now(),
       expiresAt: Date.now() + CFG.EXPIRE_MS,
       sessionID: sessionID
-    }).catch(err => console.error('Firebase save error:', err));
+    }).then(() => {
+      console.log('✅ Key đã lưu vào Firebase:', key);
+    }).catch(err => {
+      console.error('❌ Firebase save error:', err);
+    });
+  } else {
+    console.warn('⚠️ Firebase chưa được khởi tạo!');
   }
 }
 
@@ -407,7 +413,11 @@ function markKeyAsUsed(){
       fbDb.ref('keys/' + d.key).update({
         used: true,
         usedAt: Date.now()
-      }).catch(err => console.error('Firebase update error:', err));
+      }).then(() => {
+        console.log('✅ Key đã đánh dấu used:', d.key);
+      }).catch(err => {
+        console.error('❌ Firebase update error:', err);
+      });
     }
   }
 }
@@ -468,8 +478,6 @@ async function createShortLink(){
 
 /* ═══ MAIN PAGE LOGIC ═══ */
 async function startFlow(){
-  // Đã XÓA cơ chế checkDeviceLimit() -> Không cấm thiết bị
-  
   const btn = document.getElementById('btnGet');
   btn.disabled = true;
   btn.innerHTML = '⏳ Đang gọi API tạo link mới...';
@@ -595,7 +603,6 @@ function useKey(){
     return;
   }
 
-  // Đánh dấu key đã sử dụng (chỉ mang tính chất lưu trữ local)
   markKeyAsUsed();
 
   const keyInner = document.getElementById('keyInner');
@@ -817,22 +824,26 @@ document.addEventListener('contextmenu', e => e.preventDefault());
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 <script>
-// ★★★ FIREBASE CONFIG (từ hình ảnh của bạn) ★★★
+// ★★★ FIREBASE CONFIG - ĐÃ SỬA ĐỂ KHỚP VỚI APP ANDROID ★★★
 const firebaseConfig = {
-  apiKey: "AIzaSyB3Bm-SlcNEmUC2VdKCiNenf7vKhVhQx3A",
+  apiKey: "AIzaSyCP85bJIPE6MVyTuODJrQGKvV5HARtV4iY",
   authDomain: "ff-key-system.firebaseapp.com",
+  databaseURL: "https://ff-key-system-default-rtdb.firebaseio.com",
   projectId: "ff-key-system",
   storageBucket: "ff-key-system.firebasestorage.app",
   messagingSenderId: "784183180257",
-  appId: "1:784183180257:web:d5dd944f210a129779f0a0",
-  measurementId: "G-XT6Q4L909H"
+  appId: "1:784183180257:web:84c56885534fe42c79f0a0"
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const fbDb = firebase.database();
-
-console.log('✅ Firebase initialized successfully');
+try {
+  firebase.initializeApp(firebaseConfig);
+  const fbDb = firebase.database();
+  console.log('✅ Firebase initialized successfully');
+  console.log('📊 Database URL:', firebaseConfig.databaseURL);
+} catch (error) {
+  console.error('❌ Firebase initialization error:', error);
+}
 </script>
 
 </body>
