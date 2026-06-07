@@ -191,6 +191,30 @@ body::before{
 }
 .kapowwss-back-btn:hover{background:var(--or2)}
 
+/* ★★★ NÚT COPY CHO KAPOWWSS KEY ★★★ */
+.kapowwss-copy-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:12px;
+  background:rgba(34,197,94,.15);
+  border:1px solid rgba(34,197,94,.4);
+  border-radius:8px;
+  padding:10px 18px;
+  color:var(--gr);
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+  transition:all .2s;
+  font-family:'Inter',sans-serif;
+}
+.kapowwss-copy-btn:hover{
+  background:rgba(34,197,94,.25);
+  transform:translateY(-1px);
+}
+.kapowwss-copy-btn.copied{
+  background:rgba(34,197,94,.3);
+  color:#fff;
+}
+
 .overlay{
   display:none;position:fixed;inset:0;z-index:100;
   background:rgba(10,10,15,.92);
@@ -295,6 +319,7 @@ body::before{
       <div class="kapowwss-key-display" id="kapowKeyBox" style="display:none">
         <div class="key-label" style="margin-bottom:8px">🔑 Key của bạn</div>
         <div class="key-text" id="kapowKeyText">—</div>
+        <button class="kapowwss-copy-btn" id="kapowCopyBtn" onclick="copyKapowKey()">📋 Sao chép Key</button>
       </div>
       <div class="kapowwss-note" id="kapowNote"></div>
     </div>
@@ -675,6 +700,50 @@ function copyKey(){
     b.textContent = '✓ Copied';
     b.classList.add('copied');
     setTimeout(()=>{b.textContent='Copy';b.classList.remove('copied');}, 2000);
+  });
+}
+
+/* ═══ ★★★ HÀM MỚI: SAO CHÉP KEY TRONG KAPOWWSS PAGE ★★★ ═══ */
+function copyKapowKey(){
+  const key = document.getElementById('kapowKeyText').textContent;
+  if(!key || key === '—'){
+    alert('Không có key để sao chép!');
+    return;
+  }
+  
+  const btn = document.getElementById('kapowCopyBtn');
+  
+  navigator.clipboard.writeText(key).then(()=>{
+    // Hiệu ứng thành công
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '✅ Đã sao chép!';
+    btn.classList.add('copied');
+    
+    setTimeout(()=>{
+      btn.innerHTML = originalText;
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(err => {
+    // Fallback cho trình duyệt cũ
+    const textarea = document.createElement('textarea');
+    textarea.value = key;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+      document.execCommand('copy');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '✅ Đã sao chép!';
+      btn.classList.add('copied');
+      setTimeout(()=>{
+        btn.innerHTML = originalText;
+        btn.classList.remove('copied');
+      }, 2000);
+    } catch (e) {
+      alert('Không thể sao chép. Vui lòng chọn key và copy thủ công.');
+    }
+    document.body.removeChild(textarea);
   });
 }
 
